@@ -72,7 +72,7 @@ def fetch_existing_issues(ctx: Context, node_input: dict):
 
 similarity_agent = LlmAgent(
     name="similarity_checker",
-    model="gemini-1.5-pro",
+    model="gemini-flash-latest",
     instruction="""You are a duplicate issue detector for a civic app.
 
 Compare the new issue against existing issues.
