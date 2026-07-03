@@ -174,3 +174,5 @@ app = App(
     name="duplicate_detection_agent",
     root_agent=root_agent,
 )
+
+# trigger Vercel rebuild
