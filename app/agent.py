@@ -40,15 +40,14 @@ def fetch_existing_issues(ctx: Context, node_input: dict):
         db.collection("issues")
         .where("ward_id", "==", ward_id)
         .where("category", "==", category)
-        .where("status", "!=", "Resolved")
-        .limit(10)
+        .limit(30)
         .stream()
     )
 
     existing_list = []
     for doc in existing:
         data = doc.to_dict()
-        if data.get("issue_id") != node_input.get("issue_id"):
+        if data.get("status") != "Resolved" and data.get("issue_id") != node_input.get("issue_id"):
             existing_list.append(
                 {
                     "issue_id": data.get("issue_id"),
@@ -56,6 +55,8 @@ def fetch_existing_issues(ctx: Context, node_input: dict):
                     "description": data.get("description"),
                 }
             )
+            if len(existing_list) >= 10:
+                break
 
     ctx.state["existing_issues"] = existing_list
     ctx.state["new_issue"] = node_input
